@@ -1,8 +1,9 @@
 #include "X11/XF86keysym.h"
 /* See LICENSE file for copyright and license details. */
 
-#include "layouts/fibonacci.c"
-#include "layouts/gaplessgrid.c"
+#include "f_push.c"
+#include "l_fibonacci.c"
+#include "l_gaplessgrid.c"
 
 /* appearance */
 static const char font[]            = "-*-profont-r-*-*-9-*-*-*-*-*-*-*";
@@ -68,19 +69,21 @@ static const char *resscmd[] = { "xrandr-rescale" };
 static const char *vrcmd[] = { "amixer", "set", "Master", "5%+" };
 static const char *vlcmd[] = { "amixer", "set", "Master", "5%-" };
 static Key keys[] = {
+//	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
+//	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ 0,				XF86XK_AudioRaiseVolume,	spawn,	{.v = vrcmd}},
 	{ 0,				XF86XK_AudioLowerVolume,	spawn,	{.v = vlcmd}},
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_z,      togglefloating,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_w,      incnmaster,     {.i = +1 } },
+	{ MODKEY,                       XK_q,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY,                       XK_j,      pushup,		{0} },
+	{ MODKEY,                       XK_k,      pushdown,		{0} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
