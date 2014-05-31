@@ -833,7 +833,8 @@ drawcoloredtext(char *text) {
 		if( i ) {
 			dc.w = selmon->ww - dc.x;
 			drawtext(buf, col, first);
-			dc.x += textnw(buf, i) + textnw(&c,1);
+			//dc.x += textnw(buf, i) + textnw(&c,1);
+			dc.x += textnw(buf, i);
 			if( first ) dc.x += ( dc.font.ascent + dc.font.descent ) / 2;
 			first = False;
 		} else if( first ) {
@@ -1786,7 +1787,17 @@ tagmon(const Arg *arg) {
 int
 textnw(const char *text, unsigned int len) {
 	XGlyphInfo ext;
-	XftTextExtentsUtf8(dpy, dc.font.xfont, (XftChar8 *) text, len, &ext);
+	unsigned int i;
+	unsigned int j = 0;
+	
+	// create a copy of text which does not contain chars below NUMCOLORS
+	char* text2 = malloc((strlen(text)+1) * sizeof(char));
+	for(i = 0; i < len; i++) {
+		if(text[i] > NUMCOLORS) text2[j++] = text[i];
+	}
+	text2[j] = 0;
+	
+	XftTextExtentsUtf8(dpy, dc.font.xfont, (XftChar8 *) text, strlen(text2), &ext);
 	return ext.xOff;
 }
 
