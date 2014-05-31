@@ -175,6 +175,7 @@ static void configure(Client *c);
 static void configurenotify(XEvent *e);
 static void configurerequest(XEvent *e);
 static Monitor *createmon(void);
+static void cycle(const Arg *arg);
 static void destroynotify(XEvent *e);
 static void detach(Client *c);
 static void detachstack(Client *c);
@@ -227,10 +228,12 @@ static void setfullscreen(Client *c, Bool fullscreen);
 static void setlayout(const Arg *arg);
 static void setmfact(const Arg *arg);
 static void setup(void);
+static int shifttag(int dist);
 static void showhide(Client *c);
 static void sigchld(int unused);
 static void spawn(const Arg *arg);
 static void tag(const Arg *arg);
+static void tagcycle(const Arg *arg);
 static void tagmon(const Arg *arg);
 static int textnw(const char *text, unsigned int len);
 static void tile(Monitor *);
@@ -2353,6 +2356,42 @@ zoom(const Arg *arg) {
 			arrange(c->mon);
 		}
 	}
+}
+
+int
+shifttag(int dist) {
+   int i, curtags;
+   int seltag = 0;
+   int numtags = LENGTH(tags);
+
+   curtags = selmon->tagset[selmon->seltags];
+   for(i = 0; i < LENGTH(tags); i++) {
+       if((curtags & (1 << i)) != 0) {
+           seltag = i;
+           break;
+       }
+   }
+
+   seltag += dist;
+   if(seltag < 0)
+       seltag = numtags - (-seltag) % numtags;
+   else
+       seltag %= numtags;
+
+   return 1 << seltag;
+}
+
+void
+cycle(const Arg *arg) {
+   const Arg a = { .i = shifttag(arg->i) };
+   view(&a);
+}
+
+void
+tagcycle(const Arg *arg) {
+   const Arg a = { .i = shifttag(arg->i) };
+   tag(&a);
+   view(&a);
 }
 
 int

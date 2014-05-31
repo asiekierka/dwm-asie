@@ -79,8 +79,12 @@ static Key keys[] = {
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_z,      togglefloating,      {0} },
-	{ MODKEY,                       XK_r,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_e,      focusstack,     {.i = -1 } },
+	{ MODKEY|ShiftMask,                       XK_m,      tagcycle,     {.i = +1 } },
+	{ MODKEY|ShiftMask,                       XK_n,      tagcycle,     {.i = -1 } },
+	{ MODKEY,                       XK_m,      cycle,     {.i = +1 } },
+	{ MODKEY,                       XK_n,      cycle,     {.i = -1 } },
+	{ MODKEY,                       XK_s,      focusstack,     {.i = +1 } },
+	{ MODKEY,                       XK_a,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_w,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_q,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
@@ -109,7 +113,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,                       XK_r,      quit,           {1} },
+	{ MODKEY|ShiftMask,                       XK_q,      quit,           {1} },
 };
 
 /* button definitions */
