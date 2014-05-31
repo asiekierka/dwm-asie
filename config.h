@@ -6,7 +6,7 @@
 #include "l_gaplessgrid.c"
 
 /* appearance */
-static const char font[]            = "-*-profont-r-*-*-9-*-*-*-*-*-*-*";
+static const char font[]            = "ProFont:size=9";
 
 #define COLOR_URGENT	5
 #define COLOR_FOCUS	2
