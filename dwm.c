@@ -60,7 +60,7 @@
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast };        /* cursor */
 enum { ColBorder, ColFG, ColBG, ColLast };              /* color */
-enum { NetSupported, NetWMName, NetWMState,
+enum { NetSupported, NetWMDemandsAttention, NetWMName, NetWMState,
        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
        NetWMWindowTypeDialog, NetClientList, NetLast };     /* EWMH atoms */
 enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms */
@@ -565,6 +565,10 @@ clientmessage(XEvent *e) {
 		if(cme->data.l[1] == netatom[NetWMFullscreen] || cme->data.l[2] == netatom[NetWMFullscreen])
 			setfullscreen(c, (cme->data.l[0] == 1 /* _NET_WM_STATE_ADD    */
 			              || (cme->data.l[0] == 2 /* _NET_WM_STATE_TOGGLE */ && !c->isfullscreen)));
+		else if(cme->data.l[1] == netatom[NetWMDemandsAttention]) {
+			c->isurgent = (cme->data.l[0] == 1 || (cme->data.l[0] == 2 && !c->isurgent));
+			drawbar(c->mon);
+		}
 	}
 	else if(cme->message_type == netatom[NetActiveWindow]) {
 		if(!ISVISIBLE(c)) {
@@ -1696,6 +1700,7 @@ setup(void) {
 	wmatom[WMTakeFocus] = XInternAtom(dpy, "WM_TAKE_FOCUS", False);
 	netatom[NetActiveWindow] = XInternAtom(dpy, "_NET_ACTIVE_WINDOW", False);
 	netatom[NetSupported] = XInternAtom(dpy, "_NET_SUPPORTED", False);
+	netatom[NetWMDemandsAttention] = XInternAtom(dpy, "_NET_WM_STATE_DEMANDS_ATTENTION", False);
 	netatom[NetWMName] = XInternAtom(dpy, "_NET_WM_NAME", False);
 	netatom[NetWMState] = XInternAtom(dpy, "_NET_WM_STATE", False);
 	netatom[NetWMFullscreen] = XInternAtom(dpy, "_NET_WM_STATE_FULLSCREEN", False);
