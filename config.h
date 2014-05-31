@@ -1,7 +1,8 @@
 #include "X11/XF86keysym.h"
 /* See LICENSE file for copyright and license details. */
 
-#include "fibonacci.c"
+#include "layouts/fibonacci.c"
+#include "layouts/gaplessgrid.c"
 
 /* appearance */
 static const char font[]            = "-*-profont-r-*-*-9-*-*-*-*-*-*-*";
@@ -44,6 +45,7 @@ static const Layout layouts[] = {
 //	{ "><>",      NULL },    /* no layout function means floating behavior */
 //	{ "[M]",      monocle },
 	{ "[\\]",	dwindle },
+	{ "###",	gaplessgrid },
 };
 
 /* key definitions */
