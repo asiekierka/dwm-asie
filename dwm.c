@@ -1860,13 +1860,11 @@ textnw(const char *text, unsigned int len) {
 	unsigned int j = 0;
 	
 	// create a copy of text which does not contain chars below NUMCOLORS
-	char* text2 = malloc((strlen(text)+1) * sizeof(char));
 	for(i = 0; i < len; i++) {
-		if(text[i] > NUMCOLORS) text2[j++] = text[i];
+		if(text[i] > NUMCOLORS) j++;
 	}
-	text2[j] = 0;
 	
-	XftTextExtentsUtf8(dpy, dc.font.xfont, (XftChar8 *) text, strlen(text2), &ext);
+	XftTextExtentsUtf8(dpy, dc.font.xfont, (XftChar8 *) text, j, &ext);
 	return ext.xOff;
 }
 
