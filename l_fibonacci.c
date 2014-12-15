@@ -3,7 +3,7 @@ fibonacci(Monitor *mon, int s) {
 	unsigned int i, n, nx, ny, nw, nh;
 	Client *c;
 
-	for(n = 0, c = nexttiled(mon->clients); c; c = nexttiled(c->next), n++);
+	for(n = 0, c = nexttiled(mon->cl->clients, mon); c; c = nexttiled(c->next, mon), n++);
 	if(n == 0)
 		return;
 	
@@ -12,7 +12,7 @@ fibonacci(Monitor *mon, int s) {
 	nw = mon->ww;
 	nh = mon->wh;
 	
-	for(i = 0, c = nexttiled(mon->clients); c; c = nexttiled(c->next)) {
+	for(i = 0, c = nexttiled(mon->cl->clients, mon); c; c = nexttiled(c->next, mon)) {
 		if((i % 2 && nh / 2 > 2 * c->bw)
 		   || (!(i % 2) && nw / 2 > 2 * c->bw)) {
 			if(i < n - 1) {

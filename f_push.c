@@ -2,8 +2,8 @@ static Client *
 prevtiled(Client *c) {
 	Client *p, *r;
 
-	for(p = selmon->clients, r = NULL; p && p != c; p = p->next)
-		if(!p->isfloating && ISVISIBLE(p))
+	for(p = selmon->cl->clients, r = NULL; p && p != c; p = p->next)
+		if(!p->isfloating && ISVISIBLE(p, selmon))
 			r = p;
 	return r;
 }
@@ -19,10 +19,10 @@ pushup(const Arg *arg) {
 		/* attach before c */
 		detach(sel);
 		sel->next = c;
-		if(selmon->clients == c)
-			selmon->clients = sel;
+		if(selmon->cl->clients == c)
+			selmon->cl->clients = sel;
 		else {
-			for(c = selmon->clients; c->next != sel->next; c = c->next);
+			for(c = selmon->cl->clients; c->next != sel->next; c = c->next);
 			c->next = sel;
 		}
 	} else {
@@ -43,7 +43,7 @@ pushdown(const Arg *arg) {
 
 	if(!sel || sel->isfloating)
 		return;
-	if((c = nexttiled(sel->next))) {
+	if((c = nexttiled(sel->next, selmon))) {
 		/* attach after c */
 		detach(sel);
 		sel->next = c->next;
