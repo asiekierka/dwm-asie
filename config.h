@@ -53,7 +53,7 @@ static const Layout layouts[] = {
 //	{ "[M]",      monocle },
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 		{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -73,24 +73,24 @@ static const char *vrcmd[] = { "amixer", "set", "Master", "5%+" };
 static const char *vlcmd[] = { "amixer", "set", "Master", "5%-" };
 static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ 0,				XF86XK_AudioRaiseVolume,	spawn,	{.v = vrcmd}},
-	{ 0,				XF86XK_AudioLowerVolume,	spawn,	{.v = vlcmd}},
+/*	{ 0,				XF86XK_AudioRaiseVolume,	spawn,	{.v = vrcmd}},
+	{ 0,				XF86XK_AudioLowerVolume,	spawn,	{.v = vlcmd}}, */
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_m,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_z,      togglefloating,      {0} },
 	{ MODKEY|ShiftMask,                       XK_m,      tagcycle,     {.i = +1 } },
 	{ MODKEY|ShiftMask,                       XK_n,      tagcycle,     {.i = -1 } },
-	{ MODKEY,                       XK_m,      cycle,     {.i = +1 } },
-	{ MODKEY,                       XK_n,      cycle,     {.i = -1 } },
-	{ MODKEY,                       XK_s,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_a,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_w,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_q,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
+	{ MODKEY,                       XK_p,      cycle,     {.i = +1 } },
+	{ MODKEY,                       XK_q,      cycle,     {.i = -1 } },
+	{ MODKEY,                       XK_i,      focusstack,     {.i = +1 } },
+	{ MODKEY,                       XK_e,      focusstack,     {.i = -1 } },
+	{ MODKEY,                       XK_o,      incnmaster,     {.i = +1 } },
+	{ MODKEY,                       XK_w,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_a,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_j,      pushup,		{0} },
-	{ MODKEY,                       XK_k,      pushdown,		{0} },
+	{ MODKEY,                       XK_k,      pushup,		{0} },
+	{ MODKEY,                       XK_s,      pushdown,		{0} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
